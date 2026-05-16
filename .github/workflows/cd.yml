@@ -46,13 +46,22 @@ jobs:
       - name: Wait for deployment rollout
         run: kubectl rollout status deployment/intrusion-detection --timeout=180s
 
+      - name: Automated Background Port-Forward
+        run: |
+          # Kill any existing port-forwards to avoid "address already in type" errors
+          Stop-Process -Name "kubectl" -ErrorAction SilentlyContinue
+          # Start a new background tunnel that survives the runner's completion
+          Start-Process kubectl -ArgumentList "port-forward svc/intrusion-detection-svc 8501:8501" -NoNewWindow
+          # Give it a few seconds to initialize
+          Sleep 5
+
       - name: Print Minikube service URL
-        run: echo "Run 'minikube service intrusion-detection-svc' in your local terminal to access the dashboard!"
+        run: echo "Tunnel is now running in your PC's background. Dashboard is live at http://localhost:8501"
 
       - name: Generate Clickable Summary
         run: |
           $summary = @"
-          ### 🚀 Deployment Successful!
+          ###  Deployment Successful!
           The Network Intrusion Dashboard has been deployed to your local Kubernetes cluster.
           
           **Access your Dashboard here:**
