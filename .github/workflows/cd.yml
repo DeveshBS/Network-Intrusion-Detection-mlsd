@@ -33,7 +33,7 @@ jobs:
           docker tag intrusion-detection:${{ github.event.workflow_run.head_sha }} intrusion-detection:latest
 
       - name: Load image into Minikube
-        run: minikube image load intrusion-detection:latest
+        run: minikube image load intrusion-detection:${{ github.event.workflow_run.head_sha }}
 
       - name: Update image tag in deployment.yaml
         run: (Get-Content k8s/deployment.yaml) -replace "intrusion-detection:latest", "intrusion-detection:${{ github.event.workflow_run.head_sha }}" | Set-Content k8s/deployment.yaml
