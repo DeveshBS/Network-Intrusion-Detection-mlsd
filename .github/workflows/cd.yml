@@ -47,7 +47,7 @@ jobs:
         run: kubectl rollout status deployment/intrusion-detection --timeout=180s
 
       - name: Print Minikube service URL
-        run: minikube service intrusion-detection-svc --url
+        run: echo "Run 'minikube service intrusion-detection-svc' in your local terminal to access the dashboard!"
 
       - name: CD complete
         run: |
