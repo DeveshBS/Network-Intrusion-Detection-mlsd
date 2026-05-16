@@ -11,9 +11,11 @@ mlflow.db
 mlflow-artifacts/
 
 # Models
-models/*.pkl
-models/*.h5
-models/*.joblib
+# models/*.pkl
+# models/*.h5
+# models/*.joblib
+!models/intrusion_detection_model.pkl
+!models/scaler.pkl
 
 # Datasets
 data/*.csv
