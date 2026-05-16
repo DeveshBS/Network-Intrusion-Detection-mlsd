@@ -77,3 +77,8 @@ jobs:
           echo "Local deployment complete. Click the link in the job summary!"
 
       # Note: This requires a self-hosted runner with Minikube installed.
+      # Note: This job must run on a self-hosted runner.
+      # To set it up:
+      # 1. Go to GitHub repo -> Settings -> Actions -> Runners
+      # 2. Click "New self-hosted runner"
+      # 3. Follow the instructions to install and start the runner locally.
