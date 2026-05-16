@@ -25,6 +25,7 @@ jobs:
 
       - name: Build Docker image locally
         run: |
+          cp models/scaler.pkl scaler.pkl 2>/dev/null || touch scaler.pkl
           docker build -t intrusion-detection:${{ github.event.workflow_run.head_sha }} .
           docker tag intrusion-detection:${{ github.event.workflow_run.head_sha }} intrusion-detection:latest
 

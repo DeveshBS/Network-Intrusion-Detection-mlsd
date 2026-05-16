@@ -21,11 +21,11 @@ def fetch_data():
                 src = os.path.join(root, file)
                 dst = os.path.join(current_dir, file)
                 shutil.copy2(src, dst)
-                print(f"✅ Successfully copied {file} to {current_dir}")
+                print(f" Successfully copied {file} to {current_dir}")
                 found_files += 1
                 
     if found_files < len(target_files):
-        print("⚠️ Warning: Some required files were not found in the downloaded package.")
+        print(" Warning: Some required files were not found in the downloaded package.")
 
 if __name__ == "__main__":
     fetch_data()

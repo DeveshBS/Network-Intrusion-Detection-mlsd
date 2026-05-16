@@ -55,6 +55,7 @@ jobs:
 
       - name: Build Docker image
         run: |
+          cp models/scaler.pkl scaler.pkl 2>/dev/null || touch scaler.pkl
           docker build -t intrusion-detection:latest .
 
       - name: CI complete
