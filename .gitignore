@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+env/
+.pytest_cache/
+
+# MLflow
+mlruns/
+mlflow.db
+mlflow-artifacts/
+
+# Models
+models/*.pkl
+models/*.h5
+models/*.joblib
+
+# Datasets
+data/*.csv
+data/*.txt
+data/*.zip
+
+# OS
+.DS_Store
