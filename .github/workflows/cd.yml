@@ -11,9 +11,6 @@ jobs:
   deploy:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: self-hosted
-    defaults:
-      run:
-        shell: bash
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -28,7 +25,7 @@ jobs:
 
       - name: Build Docker image locally
         run: |
-          cp models/scaler.pkl scaler.pkl 2>/dev/null || touch scaler.pkl
+          if (Test-Path "models/scaler.pkl") { Copy-Item "models/scaler.pkl" -Destination "scaler.pkl" -ErrorAction SilentlyContinue } else { New-Item "scaler.pkl" -ItemType File -Force | Out-Null }
           docker build -t intrusion-detection:${{ github.event.workflow_run.head_sha }} .
           docker tag intrusion-detection:${{ github.event.workflow_run.head_sha }} intrusion-detection:latest
 
@@ -36,7 +33,7 @@ jobs:
         run: minikube image load intrusion-detection:latest
 
       - name: Update image tag in deployment.yaml
-        run: sed -i "s|intrusion-detection:latest|intrusion-detection:${{ github.event.workflow_run.head_sha }}|g" k8s/deployment.yaml
+        run: (Get-Content k8s/deployment.yaml) -replace "intrusion-detection:latest", "intrusion-detection:${{ github.event.workflow_run.head_sha }}" | Set-Content k8s/deployment.yaml
 
       - name: Deploy to Minikube
         run: |
