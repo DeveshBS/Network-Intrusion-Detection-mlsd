@@ -49,9 +49,22 @@ jobs:
       - name: Print Minikube service URL
         run: echo "Run 'minikube service intrusion-detection-svc' in your local terminal to access the dashboard!"
 
+      - name: Generate Clickable Summary
+        run: |
+          $summary = @"
+          ### 🚀 Deployment Successful!
+          The Network Intrusion Dashboard has been deployed to your local Kubernetes cluster.
+          
+          **Access your Dashboard here:**
+          [http://localhost:8501](http://localhost:8501)
+          
+          > **Note:** Ensure you have the port-forward running in your terminal:
+          > ``kubectl port-forward svc/intrusion-detection-svc 8501:8501``
+          "@
+          $summary | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Encoding utf8 -Append
+
       - name: CD complete
         run: |
-          echo "Local deployment complete"
-          echo "App on Minikube: run 'minikube service intrusion-detection-svc --url'"
+          echo "Local deployment complete. Click the link in the job summary!"
 
       # Note: This requires a self-hosted runner with Minikube installed.
